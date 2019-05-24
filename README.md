@@ -129,7 +129,7 @@ Create a Master node
 ```
 az vm create --name master --resource-group custom-k8s --image UbuntuLTS \
     --public-ip-address master-pip --public-ip-address-allocation static \
-    --vnet-name vnet --subnet subnet1 \
+    --vnet-name vnet --subnet subnet1 --size Standard_A3 \
     --admin-username cicuser --admin-password '$CIC-user-password$'
 ```
 
@@ -138,7 +138,7 @@ Create a worker node
 ```
 az vm create --name worker1 --resource-group custom-k8s --image UbuntuLTS \
     --public-ip-address worker1-pip --public-ip-address-allocation static \
-    --vnet-name vnet --subnet subnet1 \
+    --vnet-name vnet --subnet subnet1 --size Standard_A2 \
     --admin-username cicuser --admin-password '$CIC-user-password$'
 ```
 
@@ -147,14 +147,56 @@ Create another worker node
 ```
 az vm create --name worker2 --resource-group custom-k8s --image UbuntuLTS \
     --public-ip-address worker2-pip --public-ip-address-allocation static \
-    --vnet-name vnet --subnet subnet1 \
+    --vnet-name vnet --subnet subnet1 --size Standard_A2 \
     --admin-username cicuser --admin-password '$CIC-user-password$'
 ```
 
+### Install Kubernetes using KUBEADM
 
+On Master
+
+```
+wget https://raw.githubusercontent.com/christus02/azure-custom-k8s/master/scripts/k8s_install_master.sh
+```
+
+```
+bash k8s_install_master.sh
+```
+
+**NOTE DOWN THE kubeadm join command from the output of the MASTER Node's BASH Script**
+
+On Workers
+
+```
+wget https://raw.githubusercontent.com/christus02/azure-custom-k8s/master/scripts/k8s_install_worker.sh
+```
+
+```
+bash k8s_install_worker.sh
+```
+
+Now Join the Worker nodes to the cluster
+
+Paste the above noted `kubeadm join` command in the worker nodes. Use **SUDO** before the `kubeadm join` command
+
+Now execute `kubectl get nodes -owide` on Master node to verify that all the nodes have been added fine
+
+
+### Create a VPX in Azure
+
+
+## CLEAN UP
 
 ## Delete the created Kubernetes Cluster
 
 ### Delete the VNET
 
 `az network vnet delete --resource-group custom-k8s --name vnet`
+
+## Delete the created VMs
+
+az vm delete --name master --resource-group custom-k8s -y
+az vm delete --name worker1 --resource-group custom-k8s -y
+az vm delete --name worker2 --resource-group custom-k8s -y
+
+
