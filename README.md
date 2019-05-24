@@ -46,7 +46,7 @@ az network vnet subnet create --resource-group custom-k8s --vnet-name vnet --nam
 
 ### Create Network Security Groups for the Subnets
 
-**For Subnet 1: **
+**For Subnet 1:**
 
 Create a Network Security Group
 
@@ -89,7 +89,7 @@ az network vnet subnet update --vnet-name vnet --name subnet1 --resource-group c
     --network-security-group nsg-subnet1
 ```
 
-**For Subnet 2: **
+**For Subnet 2:**
 
 Create a Network Security Group
 
