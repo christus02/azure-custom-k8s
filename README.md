@@ -129,7 +129,7 @@ Create a Master node
 ```
 az vm create --name master --resource-group custom-k8s --image UbuntuLTS \
     --public-ip-address master-pip --public-ip-address-allocation static \
-    --vnet-name vnet --subnet subnet1 --size Standard_A3 \
+    --vnet-name vnet --subnet subnet1 --size Standard_F8s_v2 \
     --admin-username someuser --admin-password 'somepassword'
 ```
 
@@ -138,7 +138,7 @@ Create a worker node
 ```
 az vm create --name worker1 --resource-group custom-k8s --image UbuntuLTS \
     --public-ip-address worker1-pip --public-ip-address-allocation static \
-    --vnet-name vnet --subnet subnet1 --size Standard_A2 \
+    --vnet-name vnet --subnet subnet1 --size Standard_F8s_v2 \
     --admin-username someuser --admin-password 'somepassword'
 ```
 
@@ -147,7 +147,7 @@ Create another worker node
 ```
 az vm create --name worker2 --resource-group custom-k8s --image UbuntuLTS \
     --public-ip-address worker2-pip --public-ip-address-allocation static \
-    --vnet-name vnet --subnet subnet1 --size Standard_A2 \
+    --vnet-name vnet --subnet subnet1 --size Standard_F8s_v2 \
     --admin-username someuser --admin-password 'somepassword'
 ```
 
